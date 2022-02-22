@@ -17,6 +17,10 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     var products = mutableStateOf<UiState<List<Product>>>(UiState.Empty)
         private set
 
+    init {
+        getStoreDetails()
+    }
+
     fun getStoreDetails() {
         viewModelScope.launch {
             storeDetails.value = UiState.Loading
