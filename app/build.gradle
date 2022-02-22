@@ -77,5 +77,8 @@ dependencies {
 
     //test-hilt
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"\
+
+    //Gson
+    implementation "com.google.code.gson:gson:$gson_version"
 }
