@@ -12,6 +12,7 @@ import com.suhail.simpleecommerceapp.order.OrderSummary
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suhail.simpleecommerceapp.home.HomeViewModel
 import com.suhail.simpleecommerceapp.order.OrderSuccess
+import com.suhail.simpleecommerceapp.order.OrderSummaryViewModel
 
 const val ROUTE_HOME = "HomeRoute"
 const val ROUTE_ORDER = "OrderRoute"
@@ -51,7 +52,11 @@ fun NavGraphBuilder.homeGraph(navController: NavHostController, mainViewModel: M
 fun NavGraphBuilder.orderGraph(navController: NavHostController, mainViewModel: MainViewModel) {
     navigation(startDestination = SCREEN_ORDER_SUMMARY, route = Screen.Order.route) {
         composable(SCREEN_ORDER_SUMMARY) {
-            OrderSummary(mainViewModel, navController)
+            val parentEntry = remember {
+                navController.getBackStackEntry(Screen.Order.route)
+            }
+            val parentViewModel = hiltViewModel<OrderSummaryViewModel>(parentEntry)
+            OrderSummary(parentViewModel, mainViewModel, navController)
         }
         composable(SCREEN_ORDER_SUCCESS) {
             OrderSuccess(navController)

@@ -19,12 +19,13 @@ import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUCCESS
 import com.suhail.simpleecommerceapp.data.Product
 
 @Composable
-fun OrderSummary(mainViewModel: MainViewModel, navController: NavHostController) {
+fun OrderSummary(viewModel: OrderSummaryViewModel, mainViewModel: MainViewModel, navController: NavHostController) {
     Column {
         OrderSummaryList(mainViewModel.getOrderSummary())
         Column(modifier = Modifier.weight(20f)) {
             AddressBox()
             BottomBar {
+                viewModel.placeOrder(mainViewModel.getOrderSummary().orEmpty())
                 navController.navigate(SCREEN_ORDER_SUCCESS)
             }
         }
