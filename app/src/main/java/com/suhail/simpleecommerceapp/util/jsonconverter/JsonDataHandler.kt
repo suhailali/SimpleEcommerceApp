@@ -8,21 +8,21 @@ import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.util.filereader.FileReader
 
 
-class JsonDataHandler(private val fileReader: FileReader) {
+class JsonDataHandler(private val fileReader: FileReader): DataHandler {
 
-    fun getStoreDetails(path: String): Store? {
+    override fun getStoreDetails(path: String): Store? {
         val data = fileReader.loadJSONFile(path) ?: return null
         val value = object : TypeToken<Store>() {}.type
         return Gson().fromJson(data, value)
     }
 
-    fun getProducts(path: String): List<Product>? {
+    override fun getProducts(path: String): List<Product>? {
         val data = fileReader.loadJSONFile(path) ?: return listOf()
         val value = object : TypeToken<List<Product>>() {}.type
         return Gson().fromJson(data, value)
     }
 
-    fun getJsonForOrder(list: List<Product>): String {
+    override fun getJsonForOrder(list: List<Product>): String {
         val gson = GsonBuilder().setPrettyPrinting().create()
         return gson.toJson(list)
     }

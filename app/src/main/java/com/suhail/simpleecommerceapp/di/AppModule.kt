@@ -12,6 +12,7 @@ import com.suhail.simpleecommerceapp.util.filereader.FileReaderImpl
 import com.suhail.simpleecommerceapp.util.jsonconverter.JsonDataHandler
 import com.suhail.simpleecommerceapp.util.filewriter.FileWriter
 import com.suhail.simpleecommerceapp.util.filewriter.LocalStorageFileWriter
+import com.suhail.simpleecommerceapp.util.jsonconverter.DataHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,13 +26,13 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideDataService(jsonDataHandler: JsonDataHandler, fileWriter: FileWriter) : DataService {
+    fun provideDataService(jsonDataHandler: DataHandler, fileWriter: FileWriter) : DataService {
         return MockServiceImpl(jsonDataHandler = jsonDataHandler, fileWriter = fileWriter)
     }
 
     @Singleton
     @Provides
-    fun providesJsonDataHandler(fileReader: FileReader): JsonDataHandler {
+    fun providesJsonDataHandler(fileReader: FileReader): DataHandler {
         return JsonDataHandler(fileReader = fileReader)
     }
 
