@@ -1,0 +1,63 @@
+[
+  {
+  "id":1,
+  "name": "Leather Jacket",
+  "price": 100,
+  "discounted_price": 80,
+  "discount_percent": 20,
+  "image": "",
+  "description":"",
+  "available_quantity":4
+  },
+  
+{
+  "id":1,
+  "name": "Leather Jacket",
+  "price": 100,
+  "discounted_price": 80,
+  "discount_percent": 20,
+  "image": "",
+  "description":"",
+  "available_quantity":4
+  },
+  {
+  "id":1,
+  "name": "Leather Jacket",
+  "price": 100,
+  "discounted_price": 80,
+  "discount_percent": 20,
+  "image": "",
+  "description":"",
+  "available_quantity":4
+  },
+  {
+  "id":1,
+  "name": "Leather Jacket",
+  "price": 100,
+  "discounted_price": 80,
+  "discount_percent": 20,
+  "image": "",
+  "description":"",
+  "available_quantity":4
+  },
+  {
+  "id":1,
+  "name": "Leather Jacket",
+  "price": 100,
+  "discounted_price": 80,
+  "discount_percent": 20,
+  "image": "",
+  "description":"",
+  "available_quantity":4
+  },
+  {
+  "id":1,
+  "name": "Leather Jacket",
+  "price": 100,
+  "discounted_price": 80,
+  "discount_percent": 20,
+  "image": "",
+  "description":"",
+  "available_quantity":4
+  }
+]

@@ -19,6 +19,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
     init {
         getStoreDetails()
+        getProducts()
     }
 
     fun getStoreDetails() {
@@ -45,5 +46,17 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                 }
             }
         }
+    }
+
+    fun updateQuantity(currentValue: String, isIncrement: Boolean, availableQuantity: Int): String {
+        var currentQuantity = currentValue.toInt()
+        if (isIncrement) {
+            if (currentQuantity < availableQuantity)
+                currentQuantity += 1
+        } else {
+            if (currentQuantity > 0)
+                currentQuantity -= 1
+        }
+        return currentQuantity.toString()
     }
 }

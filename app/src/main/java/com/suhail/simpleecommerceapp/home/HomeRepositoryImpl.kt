@@ -12,6 +12,6 @@ class HomeRepositoryImpl @Inject constructor(private val dataService: DataServic
     }
 
     override suspend fun getProducts(): Result<List<Product>> {
-        TODO("Not yet implemented")
+        return dataService.getProducts()
     }
 }

@@ -17,7 +17,12 @@ class MockServiceImpl @Inject constructor(private val jsonDataProvider: JsonData
     }
 
     override suspend fun getProducts(): Result<List<Product>> {
-        TODO("Not yet implemented")
+        val data = jsonDataProvider.getProducts("data/Products.json")
+        return if (data != null) {
+            Result.success(data)
+        } else {
+            Result.failure(Throwable("Data not found"))
+        }
     }
 
     override suspend fun postOrder(): Result<OrderStatus> {
