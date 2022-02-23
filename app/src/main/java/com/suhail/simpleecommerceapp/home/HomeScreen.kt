@@ -80,12 +80,12 @@ fun Products(productList: List<Product>, viewModel: HomeViewModel) {
             ProductRow(product = product, textState) {
                 run {
                     val updatedQuantity = viewModel.updateQuantity(
-                        product.selected_quantity.toString(),
+                        product.selected_quantity,
                         it,
                         product.available_quantity
                     )
-                    product.selected_quantity = updatedQuantity.toInt()
-                    textState = updatedQuantity
+                    product.selected_quantity = updatedQuantity
+                    textState = updatedQuantity.toString()
                 }
             }
         }

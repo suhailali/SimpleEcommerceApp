@@ -17,7 +17,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     var products = mutableStateOf<UiState<List<Product>>>(UiState.Empty)
         private set
 
-    init {
+    fun fetchData() {
         getStoreDetails()
         getProducts()
     }
@@ -48,8 +48,8 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         }
     }
 
-    fun updateQuantity(currentValue: String, isIncrement: Boolean, availableQuantity: Int): String {
-        var currentQuantity = currentValue.toInt()
+    fun updateQuantity(currentValue: Int, isIncrement: Boolean, availableQuantity: Int): Int {
+        var currentQuantity = currentValue
         if (isIncrement) {
             if (currentQuantity < availableQuantity)
                 currentQuantity += 1
@@ -57,14 +57,16 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
             if (currentQuantity > 0)
                 currentQuantity -= 1
         }
-        return currentQuantity.toString()
+        return currentQuantity
     }
 
     fun getOrderItems(): ArrayList<Product> {
         val list = ArrayList<Product>()
-        (products.value as UiState.Success).value.forEach {
-            if (it.selected_quantity > 0) {
-                list.add(it)
+        if (products.value is UiState.Success) {
+            (products.value as UiState.Success).value.forEach {
+                if (it.selected_quantity > 0) {
+                    list.add(it)
+                }
             }
         }
         return list

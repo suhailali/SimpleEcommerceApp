@@ -43,6 +43,7 @@ fun NavGraphBuilder.homeGraph(navController: NavHostController, mainViewModel: M
                 navController.getBackStackEntry(Screen.Home.route)
             }
             val parentViewModel = hiltViewModel<HomeViewModel>(parentEntry)
+            parentViewModel.fetchData()
             HomeScreen(viewModel = parentViewModel, mainViewModel = mainViewModel,
                 navController = navController)
         }
