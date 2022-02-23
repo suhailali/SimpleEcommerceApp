@@ -4,6 +4,6 @@ import com.suhail.simpleecommerceapp.util.filewriter.FileWriter
 
 class FileWriterTestImpl: FileWriter {
     override fun writeToFile(fileName: String, data: String): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 }

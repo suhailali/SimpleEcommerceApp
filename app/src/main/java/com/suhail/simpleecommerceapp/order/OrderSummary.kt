@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
@@ -17,18 +18,30 @@ import androidx.navigation.NavHostController
 import com.suhail.simpleecommerceapp.MainViewModel
 import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUCCESS
 import com.suhail.simpleecommerceapp.data.Product
+import com.suhail.simpleecommerceapp.ui.util.UiState
 
 @Composable
-fun OrderSummary(viewModel: OrderSummaryViewModel, mainViewModel: MainViewModel, navController: NavHostController) {
-    Column {
-        OrderSummaryList(mainViewModel.getOrderSummary())
-        Column(modifier = Modifier.weight(20f)) {
-            AddressBox()
-            BottomBar {
-                viewModel.placeOrder(mainViewModel.getOrderSummary().orEmpty())
-                navController.navigate(SCREEN_ORDER_SUCCESS)
+fun OrderSummary(
+    viewModel: OrderSummaryViewModel,
+    mainViewModel: MainViewModel,
+    navController: NavHostController
+) {
+    val orderStatus = viewModel.orderStatus
+    Box {
+        Column {
+            OrderSummaryList(mainViewModel.getOrderSummary())
+            Column(modifier = Modifier.weight(20f)) {
+                AddressBox()
+                BottomBar {
+                    viewModel.placeOrder(mainViewModel.getOrderSummary().orEmpty())
+                }
             }
         }
+        if (orderStatus.value is UiState.Loading)
+            CircularProgressIndicator()
+
+        if (orderStatus.value is UiState.Success)
+            navController.navigate(SCREEN_ORDER_SUCCESS)
     }
 }
 

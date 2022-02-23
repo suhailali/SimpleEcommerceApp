@@ -1,4 +1,4 @@
-package com.suhail.simpleecommerceapp.home
+package com.suhail.simpleecommerceapp.order
 
 import com.google.common.truth.Truth.assertThat
 import com.suhail.simpleecommerceapp.service.MockServiceImpl
@@ -8,45 +8,31 @@ import com.suhail.simpleecommerceapp.util.MainCoroutineRule
 import com.suhail.simpleecommerceapp.util.jsonconverter.JsonDataHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
 @ExperimentalCoroutinesApi
-class HomeRepositoryImplTest {
+class OrderSummaryRepositoryImplTest {
 
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var homeRepositoryImpl: HomeRepositoryImpl
+    private lateinit var orderSummaryRepository: OrderSummaryRepository
 
     @Before
     fun setUp() {
-        homeRepositoryImpl = HomeRepositoryImpl(
+        orderSummaryRepository = OrderSummaryRepositoryImpl(
             MockServiceImpl(
                 JsonDataHandler(FileReaderTestImpl()),
-                FileWriterTestImpl()))
-    }
-
-    @After
-    fun tearDown() {
-    }
-
-    @Test
-    fun testFetchingStoreDetailsIsSuccess() {
-       mainCoroutineRule.runBlockingTest {
-            val result = homeRepositoryImpl.getStoreDetails()
-            assertThat(result.isSuccess)
-        }
+                FileWriterTestImpl()
+            )
+        )
     }
 
     @Test
-    fun testFetchingProductsIsSuccess() {
-        mainCoroutineRule.runBlockingTest {
-            val result = homeRepositoryImpl.getProducts()
-            assertThat(result.isSuccess)
-        }
+    fun testPlacingOrderIsSuccess() = mainCoroutineRule.runBlockingTest {
+        val result = orderSummaryRepository.placeOrder(listOf())
+        assertThat(result.isSuccess)
     }
 }
