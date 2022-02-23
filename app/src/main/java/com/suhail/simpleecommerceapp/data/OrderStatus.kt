@@ -1,3 +1,3 @@
 package com.suhail.simpleecommerceapp.data
 
-data class OrderStatus(var id:String?, var status:String?)
+data class OrderStatus(var id:Int = -1, var isSuccess:Boolean)

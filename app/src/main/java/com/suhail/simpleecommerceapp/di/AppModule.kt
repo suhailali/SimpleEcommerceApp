@@ -7,9 +7,9 @@ import com.suhail.simpleecommerceapp.order.OrderSummaryRepository
 import com.suhail.simpleecommerceapp.order.OrderSummaryRepositoryImpl
 import com.suhail.simpleecommerceapp.service.DataService
 import com.suhail.simpleecommerceapp.service.MockServiceImpl
-import com.suhail.simpleecommerceapp.util.FileReader
-import com.suhail.simpleecommerceapp.util.FileReaderImpl
-import com.suhail.simpleecommerceapp.util.JsonDataProvider
+import com.suhail.simpleecommerceapp.util.filereader.FileReader
+import com.suhail.simpleecommerceapp.util.filereader.FileReaderImpl
+import com.suhail.simpleecommerceapp.util.jsonconverter.JsonDataHandler
 import com.suhail.simpleecommerceapp.util.filewriter.FileWriter
 import com.suhail.simpleecommerceapp.util.filewriter.LocalStorageFileWriter
 import dagger.Module
@@ -25,14 +25,14 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideDataService(jsonDataProvider: JsonDataProvider) : DataService {
-        return MockServiceImpl(jsonDataProvider = jsonDataProvider)
+    fun provideDataService(jsonDataHandler: JsonDataHandler, fileWriter: FileWriter) : DataService {
+        return MockServiceImpl(jsonDataHandler = jsonDataHandler, fileWriter = fileWriter)
     }
 
     @Singleton
     @Provides
-    fun providesJsonDataProvider(fileReader: FileReader): JsonDataProvider {
-        return JsonDataProvider(fileReader = fileReader)
+    fun providesJsonDataHandler(fileReader: FileReader): JsonDataHandler {
+        return JsonDataHandler(fileReader = fileReader)
     }
 
     @Singleton
@@ -62,7 +62,7 @@ object HomeModule {
 @InstallIn(ViewModelComponent::class)
 object OrderModule {
     @Provides
-    fun provideOrderSummaryRepository(fileWriter: FileWriter): OrderSummaryRepository {
-        return OrderSummaryRepositoryImpl(fileWriter = fileWriter)
+    fun provideOrderSummaryRepository(dataService: DataService): OrderSummaryRepository {
+        return OrderSummaryRepositoryImpl(dataService = dataService)
     }
 }

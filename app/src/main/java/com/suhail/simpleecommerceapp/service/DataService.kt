@@ -7,5 +7,5 @@ import com.suhail.simpleecommerceapp.data.Store
 interface DataService {
     suspend fun getStoreDetails(): Result<Store>
     suspend fun getProducts(): Result<List<Product>>
-    suspend fun postOrder(): Result<OrderStatus>
+    suspend fun postOrder(list: List<Product>): Result<OrderStatus>
 }

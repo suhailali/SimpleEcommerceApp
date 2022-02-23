@@ -1,4 +1,4 @@
-package com.suhail.simpleecommerceapp.util
+package com.suhail.simpleecommerceapp.util.filereader
 
 import android.content.Context
 import java.io.IOException

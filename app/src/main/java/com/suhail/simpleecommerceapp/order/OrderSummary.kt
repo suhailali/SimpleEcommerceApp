@@ -45,7 +45,7 @@ fun ColumnScope.OrderSummaryList(orderSummary: List<Product>?) {
 fun OrderItem(product: Product) {
     Column {
         Text(text = product.id.toString())
-        Text(text = product.name)
+        Text(text = product.name.orEmpty())
     }
 }
 

@@ -1,6 +1,7 @@
 package com.suhail.simpleecommerceapp.home
 
 import com.google.common.truth.Truth.assertThat
+import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.ui.util.UiState
 import com.suhail.simpleecommerceapp.util.MainCoroutineRule
@@ -90,5 +91,18 @@ class HomeViewModelTest {
     fun `test getOrderItems return empty by default`() {
         val list = homeScreenViewModel.getOrderItems()
         assertThat(list).isEmpty()
+    }
+
+    @Test
+    fun `test getOrderItems return only list selected products`() = mainCoroutineRule.runBlockingTest {
+        val product1 = Product(selected_quantity = 0, id = 21)
+        val product2 = Product(selected_quantity = 1, id = 10)
+        val product3 = Product(selected_quantity = 1, id = 11)
+        val product4 = Product(selected_quantity = 0, id = 44)
+        val mockList = listOf(product1, product2, product3, product4)
+        Mockito.`when`(mockRepository.getProducts()).thenReturn(Result.success(mockList))
+        homeScreenViewModel.getProducts()
+        val orderItems = homeScreenViewModel.getOrderItems()
+        assertThat(orderItems).containsExactly(product2, product3).inOrder()
     }
 }

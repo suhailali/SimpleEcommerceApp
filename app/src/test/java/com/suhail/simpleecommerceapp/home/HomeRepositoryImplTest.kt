@@ -1,10 +1,9 @@
 package com.suhail.simpleecommerceapp.home
 
-import android.content.Context
 import com.google.common.truth.Truth.assertThat
 import com.suhail.simpleecommerceapp.service.MockServiceImpl
 import com.suhail.simpleecommerceapp.util.FileReaderTestImpl
-import com.suhail.simpleecommerceapp.util.JsonDataProvider
+import com.suhail.simpleecommerceapp.util.jsonconverter.JsonDataHandler
 import com.suhail.simpleecommerceapp.util.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -30,7 +29,8 @@ class HomeRepositoryImplTest {
     fun setUp() {
         homeRepositoryImpl = HomeRepositoryImpl(
             MockServiceImpl(
-                JsonDataProvider(FileReaderTestImpl())))
+                JsonDataHandler(FileReaderTestImpl())
+            ))
     }
 
     @After
@@ -46,6 +46,10 @@ class HomeRepositoryImplTest {
     }
 
     @Test
-    fun getProducts() {
+    fun testFetchingProductsIsSuccess() {
+        mainCoroutineRule.runBlockingTest {
+            val result = homeRepositoryImpl.getProducts()
+            assertThat(result.isSuccess)
+        }
     }
 }

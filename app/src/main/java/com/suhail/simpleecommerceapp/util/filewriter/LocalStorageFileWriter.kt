@@ -6,16 +6,15 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.IOException
 
-
 class LocalStorageFileWriter(private val context: Context): FileWriter {
 
-    override fun writeToFile(fileName: String, data: String) {
+    override fun writeToFile(fileName: String, data: String): Boolean {
         val root = context.filesDir
         val outDir = File(root.absolutePath + File.separator + "OrderSummary.json")
         if (!outDir.isDirectory) {
             outDir.mkdir();
         }
-        try {
+        return try {
             if (!outDir.isDirectory) {
                 throw IOException(
                     "Unable to create directory OrderSummary.json. Maybe the SD card is mounted?"
@@ -24,10 +23,11 @@ class LocalStorageFileWriter(private val context: Context): FileWriter {
             val outputFile = File(outDir, fileName)
             val writer = BufferedWriter(java.io.FileWriter(outputFile))
             writer.write(data)
-            Log.w("write to File", "success")
             writer.close()
+            true
         } catch (e: IOException) {
-            Log.w("write to File", e.message, e)
+            Log.e("write to File", e.message, e)
+            false
         }
     }
 }

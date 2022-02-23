@@ -100,7 +100,7 @@ fun ProductRow(product: Product, quantityState: String, onClickQuantity: (Boolea
             .background(color = Color.White)
     ) {
         Text(text = product.id.toString())
-        Text(text = product.name)
+        Text(text = product.name.orEmpty())
         QuantitySelection(quantityState, onClickQuantity)
     }
 }

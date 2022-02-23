@@ -1,5 +1,6 @@
 package com.suhail.simpleecommerceapp.util
 
+import com.suhail.simpleecommerceapp.util.filereader.FileReader
 import java.io.InputStreamReader
 
 class FileReaderTestImpl: FileReader {
