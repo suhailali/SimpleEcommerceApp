@@ -6,6 +6,7 @@ import com.suhail.simpleecommerceapp.home.HomeRepositoryImpl
 import com.suhail.simpleecommerceapp.service.DataService
 import com.suhail.simpleecommerceapp.service.MockServiceImpl
 import com.suhail.simpleecommerceapp.util.FileReader
+import com.suhail.simpleecommerceapp.util.FileReaderImpl
 import com.suhail.simpleecommerceapp.util.JsonDataProvider
 import dagger.Module
 import dagger.Provides
@@ -33,7 +34,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providesFileReader(@ApplicationContext appContext: Context): FileReader {
-        return FileReader(context = appContext)
+        return FileReaderImpl(context = appContext)
     }
 }
 
