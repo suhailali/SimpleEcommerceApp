@@ -1,5 +1,6 @@
 package com.suhail.simpleecommerceapp.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -16,7 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.suhail.simpleecommerceapp.MainViewModel
 import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUMMARY
 import com.suhail.simpleecommerceapp.data.Product
@@ -59,10 +62,17 @@ fun StoreInfo(store: Store) {
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
-            .background(color = MaterialTheme.colors.primary)
+            .background(color = Color.Gray)
+            .padding(10.dp)
     ) {
-//       Image(painter = painterResource(id = R.color.purple_200), contentDescription = "StoreImage")
-        Text(text = store.name.orEmpty())
+        Image(painter = rememberImagePainter(data = store.image)
+            , contentDescription = store.name, modifier = Modifier
+                .align(Alignment.CenterEnd))
+        Column {
+            Text(text = store.name.orEmpty(), color = Color.White,fontSize = 18.sp)
+            Text(text = store.open_time.orEmpty(), color = Color.White, fontSize = 12.sp)
+            Text(text = store.address.orEmpty(), color = Color.White, fontSize = 12.sp)
+        }
     }
 }
 
