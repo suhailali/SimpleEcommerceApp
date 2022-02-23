@@ -3,6 +3,7 @@ package com.suhail.simpleecommerceapp.home
 import com.google.common.truth.Truth.assertThat
 import com.suhail.simpleecommerceapp.service.MockServiceImpl
 import com.suhail.simpleecommerceapp.util.FileReaderTestImpl
+import com.suhail.simpleecommerceapp.util.FileWriterTestImpl
 import com.suhail.simpleecommerceapp.util.jsonconverter.JsonDataHandler
 import com.suhail.simpleecommerceapp.util.MainCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,8 +30,8 @@ class HomeRepositoryImplTest {
     fun setUp() {
         homeRepositoryImpl = HomeRepositoryImpl(
             MockServiceImpl(
-                JsonDataHandler(FileReaderTestImpl())
-            ))
+                JsonDataHandler(FileReaderTestImpl()),
+                FileWriterTestImpl()))
     }
 
     @After
