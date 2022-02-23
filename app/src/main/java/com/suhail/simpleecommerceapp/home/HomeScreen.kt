@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -25,20 +27,32 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavHostController) {
     val storeDetailState = viewModel.storeDetails
     val storeProductState = viewModel.products
     val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier.scrollable(
-            state = scrollState,
-            orientation = Orientation.Vertical
-        )
-    ) {
-        if (storeDetailState.value is UiState.Success) {
-            val storeDetails = (storeDetailState.value as UiState.Success).value
-            StoreInfo(store = storeDetails)
+    Box {
+        Column(
+            modifier = Modifier.scrollable(
+                state = scrollState,
+                orientation = Orientation.Vertical
+            )
+        ) {
+            if (storeDetailState.value is UiState.Success) {
+                val storeDetails = (storeDetailState.value as UiState.Success).value
+                StoreInfo(store = storeDetails)
+            }
+            if (storeProductState.value is UiState.Success) {
+                val productList = (storeProductState.value as UiState.Success).value
+                Products(productList, viewModel = viewModel)
+            }
         }
-
-        if (storeProductState.value is UiState.Success) {
-            val productList = (storeProductState.value as UiState.Success).value
-            Products(productList, viewModel = viewModel)
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .background(Color.Black)
+                .height(40.dp)
+                .align(Alignment.BottomCenter),
+        ) {
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Order Summary")
+            }
         }
     }
 }
@@ -61,7 +75,8 @@ fun Products(productList: List<Product>, viewModel: HomeViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = MaterialTheme.colors.secondary),
+            .background(color = MaterialTheme.colors.secondary)
+            .padding(bottom = 40.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(productList) { product ->
