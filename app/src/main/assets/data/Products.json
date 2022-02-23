@@ -1,12 +1,12 @@
 [
   {
   "id":1,
-  "name": "Leather Jacket",
+  "name": "Versace Eros Flame ",
   "price": 100,
   "discounted_price": 80,
   "discount_percent": 20,
-  "image": "",
-  "description":"",
+  "image": "https://images.pexels.com/photos/7796734/pexels-photo-7796734.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  "description":"Versace Eros Flame Deodorant 100 ML",
   "available_quantity":4
   },
   

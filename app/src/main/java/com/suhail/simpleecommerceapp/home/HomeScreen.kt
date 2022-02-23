@@ -2,20 +2,19 @@ package com.suhail.simpleecommerceapp.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -27,7 +26,11 @@ import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.ui.util.UiState
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, mainViewModel: MainViewModel, navController: NavHostController) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    mainViewModel: MainViewModel,
+    navController: NavHostController
+) {
 
     val storeDetailState = viewModel.storeDetails
     val storeProductState = viewModel.products
@@ -65,11 +68,14 @@ fun StoreInfo(store: Store) {
             .background(color = Color.Gray)
             .padding(10.dp)
     ) {
-        Image(painter = rememberImagePainter(data = store.image)
-            , contentDescription = store.name, modifier = Modifier
-                .align(Alignment.CenterEnd))
-        Column {
-            Text(text = store.name.orEmpty(), color = Color.White,fontSize = 18.sp)
+        Image(
+            painter = rememberImagePainter(data = store.image),
+            contentDescription = store.name,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+        )
+        Column(modifier = Modifier.align(Alignment.CenterStart)) {
+            Text(text = store.name.orEmpty(), color = Color.White, fontSize = 18.sp)
             Text(text = store.open_time.orEmpty(), color = Color.White, fontSize = 12.sp)
             Text(text = store.address.orEmpty(), color = Color.White, fontSize = 12.sp)
         }
@@ -81,9 +87,9 @@ fun Products(productList: List<Product>, viewModel: HomeViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = MaterialTheme.colors.secondary)
-            .padding(bottom = 40.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .background(color = Color.LightGray)
+            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 48.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(productList) { product ->
             var textState by remember { mutableStateOf(product.selected_quantity.toString()) }
@@ -104,30 +110,50 @@ fun Products(productList: List<Product>, viewModel: HomeViewModel) {
 
 @Composable
 fun ProductRow(product: Product, quantityState: String, onClickQuantity: (Boolean) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color.White)
-    ) {
-        Text(text = product.id.toString())
-        Text(text = product.name.orEmpty())
-        QuantitySelection(quantityState, onClickQuantity)
+    Card(elevation = 2.dp) {
+        Row(
+            modifier = Modifier
+                .background(Color.White)
+                .padding(8.dp)
+                .fillMaxWidth()
+        ) {
+            Image(
+                painter = rememberImagePainter(data = product.image),
+                contentDescription = product.name,
+                modifier = Modifier.size(94.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .background(color = Color.White),
+            ) {
+                Text(text = product.name.orEmpty(), fontSize = 16.sp)
+                Text(text = product.description.orEmpty(), fontSize = 12.sp)
+                QuantitySelection(quantityState, onClickQuantity)
+            }
+        }
     }
 }
 
 @Composable
 fun QuantitySelection(textState: String, onClickQuantity: (Boolean) -> Unit) {
-    Row {
+    Row(
+        modifier = Modifier.border(1.dp, MaterialTheme.colors.primary),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         TextButton(onClick = {
             onClickQuantity(false)
         }) {
-            Text(text = "-")
+            Text(text = "-", fontSize = 25.sp)
         }
-        Text(text = textState)
+        Text(
+            text = textState, modifier = Modifier
+                .fillMaxHeight(), textAlign = TextAlign.Center
+        )
         TextButton(onClick = {
             onClickQuantity(true)
         }) {
-            Text(text = "+")
+            Text(text = "+", fontSize = 16.sp)
         }
     }
 }
@@ -137,13 +163,13 @@ fun BoxScope.OrderSummary(onClick: () -> Unit) {
     Box(
         Modifier
             .fillMaxWidth()
-            .background(Color.Black)
+            .background(Color.Gray)
+            .padding(4.dp)
             .height(40.dp)
             .align(Alignment.BottomCenter),
     ) {
-        Button(onClick = { onClick() }) {
+        Button(modifier = Modifier.align(Alignment.BottomCenter), onClick = { onClick() }) {
             Text(text = "Order Summary")
         }
     }
-
 }
