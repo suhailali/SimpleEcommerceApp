@@ -59,4 +59,14 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         }
         return currentQuantity.toString()
     }
+
+    fun getOrderItems(): ArrayList<Product> {
+        val list = ArrayList<Product>()
+        (products.value as UiState.Success).value.forEach {
+            if (it.selected_quantity > 0) {
+                list.add(it)
+            }
+        }
+        return list
+    }
 }

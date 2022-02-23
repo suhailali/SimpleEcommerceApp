@@ -11,6 +11,7 @@ import com.suhail.simpleecommerceapp.home.HomeScreen
 import com.suhail.simpleecommerceapp.order.OrderSummary
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.suhail.simpleecommerceapp.home.HomeViewModel
+import com.suhail.simpleecommerceapp.order.OrderSuccess
 
 const val ROUTE_HOME = "HomeRoute"
 const val ROUTE_ORDER = "OrderRoute"
@@ -25,31 +26,35 @@ internal sealed class Screen(val route: String) {
 }
 
 @Composable
-fun AppNav(navController: NavHostController,
+fun AppNav(navController: NavHostController, mainViewModel: MainViewModel,
            startDestination: String = Screen.Home.route
 ) {
     NavHost(navController = navController, startDestination = startDestination ) {
-        homeGraph(navController = navController)
-        orderGraph(navController = navController)
+        homeGraph(navController = navController, mainViewModel)
+        orderGraph(navController = navController, mainViewModel)
     }
 }
 
-fun NavGraphBuilder.homeGraph(navController: NavHostController) {
+fun NavGraphBuilder.homeGraph(navController: NavHostController, mainViewModel: MainViewModel) {
     navigation(startDestination = SCREEN_HOME, route = Screen.Home.route) {
         composable(SCREEN_HOME) {
             val parentEntry = remember {
                 navController.getBackStackEntry(Screen.Home.route)
             }
             val parentViewModel = hiltViewModel<HomeViewModel>(parentEntry)
-            HomeScreen(viewModel = parentViewModel, navController = navController)
+            HomeScreen(viewModel = parentViewModel, mainViewModel = mainViewModel,
+                navController = navController)
         }
     }
 }
 
-fun NavGraphBuilder.orderGraph(navController: NavHostController) {
+fun NavGraphBuilder.orderGraph(navController: NavHostController, mainViewModel: MainViewModel) {
     navigation(startDestination = SCREEN_ORDER_SUMMARY, route = Screen.Order.route) {
         composable(SCREEN_ORDER_SUMMARY) {
-            OrderSummary()
+            OrderSummary(mainViewModel, navController)
+        }
+        composable(SCREEN_ORDER_SUCCESS) {
+            OrderSuccess(navController)
         }
     }
 }

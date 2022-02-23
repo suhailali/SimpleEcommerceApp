@@ -17,13 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.suhail.simpleecommerceapp.MainViewModel
 import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUMMARY
 import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.ui.util.UiState
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, navController: NavHostController) {
+fun HomeScreen(viewModel: HomeViewModel, mainViewModel: MainViewModel, navController: NavHostController) {
 
     val storeDetailState = viewModel.storeDetails
     val storeProductState = viewModel.products
@@ -45,6 +46,8 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavHostController) {
             }
         }
         OrderSummary {
+            val orderItems = viewModel.getOrderItems()
+            mainViewModel.setOrderSummary(orderItems)
             navController.navigate(SCREEN_ORDER_SUMMARY)
         }
     }
