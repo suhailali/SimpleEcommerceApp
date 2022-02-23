@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUMMARY
 import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.ui.util.UiState
@@ -43,16 +44,8 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavHostController) {
                 Products(productList, viewModel = viewModel)
             }
         }
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .background(Color.Black)
-                .height(40.dp)
-                .align(Alignment.BottomCenter),
-        ) {
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Order Summary")
-            }
+        OrderSummary {
+            navController.navigate(SCREEN_ORDER_SUMMARY)
         }
     }
 }
@@ -124,4 +117,20 @@ fun QuantitySelection(textState: String, onClickQuantity: (Boolean) -> Unit) {
             Text(text = "+")
         }
     }
+}
+
+@Composable
+fun BoxScope.OrderSummary(onClick: () -> Unit) {
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .background(Color.Black)
+            .height(40.dp)
+            .align(Alignment.BottomCenter),
+    ) {
+        Button(onClick = { onClick() }) {
+            Text(text = "Order Summary")
+        }
+    }
+
 }

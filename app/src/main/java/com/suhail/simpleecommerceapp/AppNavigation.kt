@@ -30,6 +30,7 @@ fun AppNav(navController: NavHostController,
 ) {
     NavHost(navController = navController, startDestination = startDestination ) {
         homeGraph(navController = navController)
+        orderGraph(navController = navController)
     }
 }
 
