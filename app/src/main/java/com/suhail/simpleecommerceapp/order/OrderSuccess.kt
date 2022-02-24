@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.suhail.simpleecommerceapp.R
 import com.suhail.simpleecommerceapp.SCREEN_HOME
+import com.suhail.simpleecommerceapp.Screen
 
 @Composable
 fun OrderSuccess(navController: NavHostController) {
@@ -23,7 +24,9 @@ fun OrderSuccess(navController: NavHostController) {
         Text(text = "Congratulations", fontSize = 24.sp, modifier = Modifier.testTag("testTagCongrats"))
         Text(text = "Your order has been success placed")
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { navController.navigate(SCREEN_HOME) }) {
+        Button(onClick = { navController.navigate(SCREEN_HOME) {
+            popUpTo(Screen.Home.route)
+        } }) {
             Text(text = "Okay")
         }
     }
