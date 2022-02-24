@@ -129,7 +129,12 @@ fun ProductRow(product: Product, quantityState: String, onClickQuantity: (Boolea
             ) {
                 Text(text = product.name.orEmpty(), fontSize = 16.sp)
                 Text(text = product.description.orEmpty(), fontSize = 12.sp)
-                QuantitySelection(quantityState, onClickQuantity)
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "$${product.price}")
+                    Spacer(modifier = Modifier.width(10.dp))
+                    QuantitySelection(quantityState, onClickQuantity)
+                }
             }
         }
     }

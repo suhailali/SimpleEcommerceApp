@@ -30,4 +30,12 @@ class OrderSummaryViewModel @Inject constructor(private val orderSummaryReposito
             }
         }
     }
+
+    fun getTotalPrice(list: List<Product>): Int {
+        var sum = 0
+        list.forEach {
+            sum += it.price
+        }
+        return sum
+    }
 }
