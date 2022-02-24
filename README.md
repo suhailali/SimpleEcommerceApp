@@ -29,6 +29,12 @@ This is a simple Android application with three screens developed using Jetpack 
 9. Google Gson
 
 # Test Cases
-1. UI tests
-2. Unit tests
+  ## UI tests
+  
+  ![This is an image](/screenshots/Testcases/UiTestCases.png)
+
+  ## Unit tests
+  
+  ![This is an image](/screenshots/Testcases/UnitTestCases.png)
+ 
 
