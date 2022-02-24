@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,6 +68,7 @@ fun StoreInfo(store: Store) {
             .height(100.dp)
             .background(color = Color.Gray)
             .padding(10.dp)
+            .testTag("TestTagStoreInfo")
     ) {
         Image(
             painter = rememberImagePainter(data = store.image),
@@ -88,7 +90,8 @@ fun Products(productList: List<Product>, viewModel: HomeViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Color.LightGray)
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 48.dp),
+            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 48.dp)
+            .testTag("TestTagProductList"),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(productList) { product ->
@@ -146,16 +149,16 @@ fun QuantitySelection(textState: String, onClickQuantity: (Boolean) -> Unit) {
         modifier = Modifier.border(1.dp, MaterialTheme.colors.primary),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TextButton(onClick = {
+        TextButton(modifier = Modifier.testTag("testTagMinusButton"), onClick = {
             onClickQuantity(false)
         }) {
             Text(text = "-", fontSize = 25.sp)
         }
         Text(
             text = textState, modifier = Modifier
-                .fillMaxHeight(), textAlign = TextAlign.Center
+                .fillMaxHeight().testTag("testTagQuantityText"), textAlign = TextAlign.Center
         )
-        TextButton(onClick = {
+        TextButton(modifier = Modifier.testTag("testTagPlusButton"),onClick = {
             onClickQuantity(true)
         }) {
             Text(text = "+", fontSize = 16.sp)
@@ -174,7 +177,7 @@ fun BoxScope.OrderSummary(onClick: () -> Unit) {
             .align(Alignment.BottomCenter),
     ) {
         Button(modifier = Modifier.align(Alignment.BottomCenter), onClick = { onClick() }) {
-            Text(text = "Order Summary")
+            Text(text = "Order Summary", modifier = Modifier.testTag("testTagButton"))
         }
     }
 }
