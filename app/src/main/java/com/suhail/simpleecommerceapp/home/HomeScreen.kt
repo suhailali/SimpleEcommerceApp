@@ -25,6 +25,7 @@ import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUMMARY
 import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.ui.util.UiState
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -36,6 +37,8 @@ fun HomeScreen(
     val storeDetailState = viewModel.storeDetails
     val storeProductState = viewModel.products
     val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState() }
     Box {
         Column(
             modifier = Modifier.scrollable(
@@ -49,7 +52,11 @@ fun HomeScreen(
             }
             if (storeProductState.value is UiState.Success) {
                 val productList = (storeProductState.value as UiState.Success).value
-                Products(productList, viewModel = viewModel)
+                Products(productList, viewModel = viewModel) {
+                    scope.launch {
+                        snackBarHostState.showSnackbar("Reached maximum order quantity for the product.")
+                    }
+                }
             }
         }
         OrderSummary {
@@ -57,6 +64,7 @@ fun HomeScreen(
             mainViewModel.setOrderSummary(orderItems)
             navController.navigate(SCREEN_ORDER_SUMMARY)
         }
+        SnackbarHost(hostState = snackBarHostState, modifier = Modifier.align(Alignment.Center))
     }
 }
 
@@ -85,7 +93,7 @@ fun StoreInfo(store: Store) {
 }
 
 @Composable
-fun Products(productList: List<Product>, viewModel: HomeViewModel) {
+fun Products(productList: List<Product>, viewModel: HomeViewModel, onMaxQuantityReached:()->Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
@@ -104,7 +112,12 @@ fun Products(productList: List<Product>, viewModel: HomeViewModel) {
                         product.available_quantity
                     )
                     product.selected_quantity = updatedQuantity
-                    textState = updatedQuantity.toString()
+//                    if(product.selected_quantity != updatedQuantity) {
+//                        product.selected_quantity = updatedQuantity
+                        textState = updatedQuantity.toString()
+//                    } else {
+//                        if (product.selected_quantity != 0) onMaxQuantityReached()
+//                    }
                 }
             }
         }
@@ -156,7 +169,8 @@ fun QuantitySelection(textState: String, onClickQuantity: (Boolean) -> Unit) {
         }
         Text(
             text = textState, modifier = Modifier
-                .fillMaxHeight().testTag("testTagQuantityText"), textAlign = TextAlign.Center
+                .fillMaxHeight()
+                .testTag("testTagQuantityText"), textAlign = TextAlign.Center
         )
         TextButton(modifier = Modifier.testTag("testTagPlusButton"),onClick = {
             onClickQuantity(true)

@@ -1,6 +1,8 @@
 package com.suhail.simpleecommerceapp.order
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suhail.simpleecommerceapp.data.OrderStatus
@@ -16,6 +18,8 @@ class OrderSummaryViewModel @Inject constructor(private val orderSummaryReposito
 
     var orderStatus = mutableStateOf<UiState<OrderStatus>>(UiState.Empty)
         private set
+
+    var address by mutableStateOf("")
 
     fun placeOrder(list: List<Product>) {
         orderStatus.value = UiState.Loading
@@ -38,7 +42,7 @@ class OrderSummaryViewModel @Inject constructor(private val orderSummaryReposito
     fun getTotalPrice(list: List<Product>): Int {
         var sum = 0
         list.forEach {
-            sum += it.price
+            sum += (it.price * it.selected_quantity)
         }
         return sum
     }

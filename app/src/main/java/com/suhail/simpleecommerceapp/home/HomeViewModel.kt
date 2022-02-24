@@ -18,8 +18,12 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         private set
 
     fun fetchData() {
-        getStoreDetails()
-        getProducts()
+        if (storeDetails.value is UiState.Empty) {
+            getStoreDetails()
+        }
+        if (products.value is UiState.Empty) {
+            getProducts()
+        }
     }
 
     fun getStoreDetails() {

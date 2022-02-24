@@ -1,5 +1,7 @@
 package com.suhail.simpleecommerceapp.order
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,10 +11,12 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -21,6 +25,7 @@ import com.suhail.simpleecommerceapp.MainViewModel
 import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUCCESS
 import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.ui.util.UiState
+import kotlinx.coroutines.launch
 
 @Composable
 fun OrderSummary(
@@ -30,13 +35,24 @@ fun OrderSummary(
 ) {
     val orderStatus = viewModel.orderStatus
     val orderSummaryList = mainViewModel.getOrderSummary().orEmpty()
+    val addressState = viewModel.address
+    val scope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState() }
     Box {
         Column {
             OrderSummaryList(orderSummaryList)
             Column(modifier = Modifier.weight(20f)) {
-                AddressBox()
+                AddressBox(addressState) {
+                    viewModel.address = it
+                }
                 BottomBar(totalPrice = viewModel.getTotalPrice(orderSummaryList)) {
-                    viewModel.placeOrder(orderSummaryList)
+                    if (viewModel.address.isNotEmpty()) {
+                        viewModel.placeOrder(orderSummaryList)
+                    } else {
+                        scope.launch {
+                            snackBarHostState.showSnackbar("Please enter delivery address")
+                        }
+                    }
                 }
             }
         }
@@ -49,6 +65,7 @@ fun OrderSummary(
             mainViewModel.clearOrderSummary()
             navController.navigate(SCREEN_ORDER_SUCCESS)
         }
+        SnackbarHost(hostState = snackBarHostState, modifier = Modifier.align(Alignment.Center))
     }
 }
 
@@ -59,7 +76,7 @@ fun ColumnScope.OrderSummaryList(orderSummary: List<Product>?) {
             .weight(80f)
             .fillMaxWidth()
             .background(color = Color.LightGray)
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 48.dp),
+            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 48.dp).testTag("testTagOrderSummaryList"),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(orderSummary ?: listOf()) { product ->
@@ -97,8 +114,8 @@ fun ProductRow(product: Product) {
 }
 
 @Composable
-fun ColumnScope.AddressBox() {
-    val textState = remember { mutableStateOf(TextFieldValue()) }
+fun ColumnScope.AddressBox(addressState: String, onValueChange:(String)->Unit) {
+   // val textState = remember { mutableStateOf("") }
     Card(
         elevation = 2.dp,
         modifier = Modifier
@@ -106,8 +123,8 @@ fun ColumnScope.AddressBox() {
             .fillMaxWidth()
     ) {
         TextField(
-            value = textState.value,
-            onValueChange = { textState.value = it },
+            value = addressState,
+            onValueChange = { onValueChange(it) },
             label = { Text("Enter delivery address") }
         )
     }
@@ -125,9 +142,9 @@ fun ColumnScope.BottomBar(totalPrice: Int, onClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = "Total Price: $$totalPrice")
+        Text(text = "Total Price: $$totalPrice", modifier = Modifier.testTag("testTagTotalPrice"))
         Button(onClick = { onClick() }) {
-            Text(text = "PlaceOrder")
+            Text(text = "Place Order")
         }
     }
 }
