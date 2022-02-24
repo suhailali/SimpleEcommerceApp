@@ -31,6 +31,10 @@ class OrderSummaryViewModel @Inject constructor(private val orderSummaryReposito
         }
     }
 
+    fun clearOrder() {
+        orderStatus.value = UiState.Empty
+    }
+
     fun getTotalPrice(list: List<Product>): Int {
         var sum = 0
         list.forEach {

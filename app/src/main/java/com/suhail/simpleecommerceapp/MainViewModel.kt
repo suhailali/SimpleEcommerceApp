@@ -16,4 +16,8 @@ class MainViewModel @Inject constructor(): ViewModel() {
     fun setOrderSummary(list: List<Product>) {
         orderSummary = list
     }
+
+    fun clearOrderSummary() {
+        orderSummary = null
+    }
 }

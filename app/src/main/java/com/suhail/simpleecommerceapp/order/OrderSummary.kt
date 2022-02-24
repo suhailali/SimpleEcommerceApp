@@ -40,11 +40,15 @@ fun OrderSummary(
                 }
             }
         }
-        if (orderStatus.value is UiState.Loading)
-            CircularProgressIndicator()
+        if (orderStatus.value is UiState.Loading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
 
-        if (orderStatus.value is UiState.Success)
+        if (orderStatus.value is UiState.Success) {
+            viewModel.clearOrder()
+            mainViewModel.clearOrderSummary()
             navController.navigate(SCREEN_ORDER_SUCCESS)
+        }
     }
 }
 
