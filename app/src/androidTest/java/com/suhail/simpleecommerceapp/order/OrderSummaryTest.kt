@@ -53,7 +53,11 @@ class OrderSummaryTest {
                 ) {
                     composable(route = Screen.Order.route) {
                         viewModel = hiltViewModel()
-                        OrderSummary(viewModel = viewModel, mainViewModel = viewModelMain, navController = navController)
+                        OrderSummary(
+                            viewModel = viewModel,
+                            mainViewModel = viewModelMain,
+                            navController = navController
+                        )
                     }
                 }
             }

@@ -15,12 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.suhail.simpleecommerceapp.MainViewModel
+import com.suhail.simpleecommerceapp.R
 import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUMMARY
 import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.data.Store
@@ -111,13 +113,12 @@ fun Products(productList: List<Product>, viewModel: HomeViewModel, onMaxQuantity
                         it,
                         product.available_quantity
                     )
-                    product.selected_quantity = updatedQuantity
-//                    if(product.selected_quantity != updatedQuantity) {
-//                        product.selected_quantity = updatedQuantity
+                    if(product.selected_quantity != updatedQuantity) {
+                        product.selected_quantity = updatedQuantity
                         textState = updatedQuantity.toString()
-//                    } else {
-//                        if (product.selected_quantity != 0) onMaxQuantityReached()
-//                    }
+                    } else {
+                        if (product.selected_quantity != 0) onMaxQuantityReached()
+                    }
                 }
             }
         }
@@ -191,7 +192,7 @@ fun BoxScope.OrderSummary(onClick: () -> Unit) {
             .align(Alignment.BottomCenter),
     ) {
         Button(modifier = Modifier.align(Alignment.BottomCenter), onClick = { onClick() }) {
-            Text(text = "Order Summary", modifier = Modifier.testTag("testTagButton"))
+            Text(text = stringResource(R.string.order_summary), modifier = Modifier.testTag("testTagButton"))
         }
     }
 }

@@ -40,12 +40,13 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `test getStoreDetails returns failure when error in repository`() = mainCoroutineRule.runBlockingTest {
-        Mockito.`when`(mockRepository.getStoreDetails()).thenReturn(Result.failure(Throwable()))
-        homeScreenViewModel.getStoreDetails()
-        val result = homeScreenViewModel.storeDetails
-        assertThat(result.value).isInstanceOf(UiState.Error::class.java)
-    }
+    fun `test getStoreDetails returns failure when error in repository`() =
+        mainCoroutineRule.runBlockingTest {
+            Mockito.`when`(mockRepository.getStoreDetails()).thenReturn(Result.failure(Throwable()))
+            homeScreenViewModel.getStoreDetails()
+            val result = homeScreenViewModel.storeDetails
+            assertThat(result.value).isInstanceOf(UiState.Error::class.java)
+        }
 
     @Test
     fun `test getProducts returns success`() = mainCoroutineRule.runBlockingTest {
@@ -56,12 +57,13 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `test getProducts returns failure when error in repository`() = mainCoroutineRule.runBlockingTest {
-        Mockito.`when`(mockRepository.getProducts()).thenReturn(Result.failure(Throwable()))
-        homeScreenViewModel.getProducts()
-        val result = homeScreenViewModel.products
-        assertThat(result.value).isInstanceOf(UiState.Error::class.java)
-    }
+    fun `test getProducts returns failure when error in repository`() =
+        mainCoroutineRule.runBlockingTest {
+            Mockito.`when`(mockRepository.getProducts()).thenReturn(Result.failure(Throwable()))
+            homeScreenViewModel.getProducts()
+            val result = homeScreenViewModel.products
+            assertThat(result.value).isInstanceOf(UiState.Error::class.java)
+        }
 
     @Test
     fun `test update quantity increments count by one`() {
@@ -94,15 +96,16 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `test getOrderItems return only list selected products`() = mainCoroutineRule.runBlockingTest {
-        val product1 = Product(selected_quantity = 0, id = 21)
-        val product2 = Product(selected_quantity = 1, id = 10)
-        val product3 = Product(selected_quantity = 1, id = 11)
-        val product4 = Product(selected_quantity = 0, id = 44)
-        val mockList = listOf(product1, product2, product3, product4)
-        Mockito.`when`(mockRepository.getProducts()).thenReturn(Result.success(mockList))
-        homeScreenViewModel.getProducts()
-        val orderItems = homeScreenViewModel.getOrderItems()
-        assertThat(orderItems).containsExactly(product2, product3).inOrder()
-    }
+    fun `test getOrderItems return only list selected products`() =
+        mainCoroutineRule.runBlockingTest {
+            val product1 = Product(selected_quantity = 0, id = 21)
+            val product2 = Product(selected_quantity = 1, id = 10)
+            val product3 = Product(selected_quantity = 1, id = 11)
+            val product4 = Product(selected_quantity = 0, id = 44)
+            val mockList = listOf(product1, product2, product3, product4)
+            Mockito.`when`(mockRepository.getProducts()).thenReturn(Result.success(mockList))
+            homeScreenViewModel.getProducts()
+            val orderItems = homeScreenViewModel.getOrderItems()
+            assertThat(orderItems).containsExactly(product2, product3).inOrder()
+        }
 }

@@ -5,7 +5,6 @@ import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.util.filewriter.FileWriter
 import com.suhail.simpleecommerceapp.util.jsonconverter.DataHandler
-import com.suhail.simpleecommerceapp.util.jsonconverter.JsonDataHandler
 import javax.inject.Inject
 
 class MockServiceImpl @Inject constructor(

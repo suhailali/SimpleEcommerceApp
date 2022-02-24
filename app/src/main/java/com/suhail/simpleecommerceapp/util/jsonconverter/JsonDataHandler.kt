@@ -8,7 +8,7 @@ import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.util.filereader.FileReader
 
 
-class JsonDataHandler(private val fileReader: FileReader): DataHandler {
+class JsonDataHandler(private val fileReader: FileReader) : DataHandler {
 
     override fun getStoreDetails(path: String): Store? {
         val data = fileReader.loadJSONFile(path) ?: return null

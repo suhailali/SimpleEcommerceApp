@@ -17,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-class OrderSuccessTest{
+class OrderSuccessTest {
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
 

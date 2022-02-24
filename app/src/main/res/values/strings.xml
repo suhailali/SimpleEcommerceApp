@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SimpleEcommerceApp</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="order_success">Your order has been success placed</string>
+    <string name="okay">Okay</string>
+    <string name="enter_delivery_address">Enter delivery address</string>
+    <string name="place_order">Place Order</string>
+    <string name="order_summary">Order Summary</string>
 </resources>

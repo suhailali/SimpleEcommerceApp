@@ -48,7 +48,11 @@ class HomeScreenTest {
                         viewModel = hiltViewModel()
                         viewModel.getStoreDetails()
                         viewModel.getProducts()
-                        HomeScreen(navController = navController, viewModel = viewModel, mainViewModel = viewModelMain)
+                        HomeScreen(
+                            navController = navController,
+                            viewModel = viewModel,
+                            mainViewModel = viewModelMain
+                        )
                     }
                 }
             }

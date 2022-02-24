@@ -41,9 +41,11 @@ class OrderSummaryViewModelTest {
 
     @Test
     fun testClearOrderResetState() = mainCoroutineRule.runBlockingTest {
-        Mockito.`when`(mockRepository.placeOrder(Mockito.anyList())).thenReturn(Result.success(
-            OrderStatus(isSuccess = true)
-        ))
+        Mockito.`when`(mockRepository.placeOrder(Mockito.anyList())).thenReturn(
+            Result.success(
+                OrderStatus(isSuccess = true)
+            )
+        )
         orderSummaryViewModel.placeOrder(listOf())
         orderSummaryViewModel.clearOrder()
         val result = orderSummaryViewModel.orderStatus
@@ -52,9 +54,11 @@ class OrderSummaryViewModelTest {
 
     @Test
     fun testPaceOrderGivesSuccess() = mainCoroutineRule.runBlockingTest {
-        Mockito.`when`(mockRepository.placeOrder(Mockito.anyList())).thenReturn(Result.success(
-            OrderStatus(isSuccess = true)
-        ))
+        Mockito.`when`(mockRepository.placeOrder(Mockito.anyList())).thenReturn(
+            Result.success(
+                OrderStatus(isSuccess = true)
+            )
+        )
         orderSummaryViewModel.placeOrder(listOf())
         val result = orderSummaryViewModel.orderStatus
         assertThat(result.value).isInstanceOf(UiState.Success::class.java)
@@ -62,9 +66,11 @@ class OrderSummaryViewModelTest {
 
     @Test
     fun testPaceOrderGivesError() = mainCoroutineRule.runBlockingTest {
-        Mockito.`when`(mockRepository.placeOrder(Mockito.anyList())).thenReturn(Result.failure(
-            Throwable()
-        ))
+        Mockito.`when`(mockRepository.placeOrder(Mockito.anyList())).thenReturn(
+            Result.failure(
+                Throwable()
+            )
+        )
         orderSummaryViewModel.placeOrder(listOf())
         val result = orderSummaryViewModel.orderStatus
         assertThat(result.value).isInstanceOf(UiState.Error::class.java)

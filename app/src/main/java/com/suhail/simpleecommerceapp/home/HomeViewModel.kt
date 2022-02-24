@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         viewModelScope.launch {
             storeDetails.value = UiState.Loading
             repository.getStoreDetails().let {
-                if(it.isSuccess) {
+                if (it.isSuccess) {
                     storeDetails.value = UiState.Success(it.getOrDefault(Store("")))
                 } else {
                     storeDetails.value = UiState.Error("Failed to access store")
@@ -43,7 +43,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         viewModelScope.launch {
             products.value = UiState.Loading
             repository.getProducts().let {
-                if(it.isSuccess) {
+                if (it.isSuccess) {
                     products.value = UiState.Success(it.getOrDefault(listOf()))
                 } else {
                     products.value = UiState.Error("Failed to access products")

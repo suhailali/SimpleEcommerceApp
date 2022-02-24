@@ -6,7 +6,7 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.IOException
 
-class LocalStorageFileWriter(private val context: Context): FileWriter {
+class LocalStorageFileWriter(private val context: Context) : FileWriter {
 
     override fun writeToFile(fileName: String, data: String): Boolean {
         val root = context.filesDir

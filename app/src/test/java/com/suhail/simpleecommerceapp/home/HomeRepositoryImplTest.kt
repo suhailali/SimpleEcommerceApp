@@ -27,7 +27,9 @@ class HomeRepositoryImplTest {
         homeRepositoryImpl = HomeRepositoryImpl(
             MockServiceImpl(
                 JsonDataHandler(FileReaderTestImpl()),
-                FileWriterTestImpl()))
+                FileWriterTestImpl()
+            )
+        )
     }
 
     @After
@@ -36,7 +38,7 @@ class HomeRepositoryImplTest {
 
     @Test
     fun testFetchingStoreDetailsIsSuccess() {
-       mainCoroutineRule.runBlockingTest {
+        mainCoroutineRule.runBlockingTest {
             val result = homeRepositoryImpl.getStoreDetails()
             assertThat(result.isSuccess)
         }

@@ -5,7 +5,8 @@ import com.suhail.simpleecommerceapp.data.Store
 import com.suhail.simpleecommerceapp.service.DataService
 import javax.inject.Inject
 
-class HomeRepositoryImpl @Inject constructor(private val dataService: DataService) : HomeRepository {
+class HomeRepositoryImpl @Inject constructor(private val dataService: DataService) :
+    HomeRepository {
 
     override suspend fun getStoreDetails(): Result<Store> {
         return dataService.getStoreDetails()

@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(): ViewModel() {
-    private var orderSummary:List<Product>? = null
+class MainViewModel @Inject constructor() : ViewModel() {
+    private var orderSummary: List<Product>? = null
 
     fun getOrderSummary(): List<Product>? {
         return orderSummary

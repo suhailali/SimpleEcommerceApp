@@ -26,7 +26,7 @@ import javax.inject.Singleton
 object AppModule {
     @Singleton
     @Provides
-    fun provideDataService(jsonDataHandler: DataHandler, fileWriter: FileWriter) : DataService {
+    fun provideDataService(jsonDataHandler: DataHandler, fileWriter: FileWriter): DataService {
         return MockServiceImpl(jsonDataHandler = jsonDataHandler, fileWriter = fileWriter)
     }
 

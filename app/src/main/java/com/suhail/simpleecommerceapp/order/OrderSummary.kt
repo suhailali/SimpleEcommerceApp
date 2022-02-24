@@ -1,7 +1,5 @@
 package com.suhail.simpleecommerceapp.order
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,19 +7,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.suhail.simpleecommerceapp.MainViewModel
+import com.suhail.simpleecommerceapp.R
 import com.suhail.simpleecommerceapp.SCREEN_ORDER_SUCCESS
 import com.suhail.simpleecommerceapp.data.Product
 import com.suhail.simpleecommerceapp.ui.util.UiState
@@ -76,7 +74,8 @@ fun ColumnScope.OrderSummaryList(orderSummary: List<Product>?) {
             .weight(80f)
             .fillMaxWidth()
             .background(color = Color.LightGray)
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 48.dp).testTag("testTagOrderSummaryList"),
+            .padding(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 48.dp)
+            .testTag("testTagOrderSummaryList"),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(orderSummary ?: listOf()) { product ->
@@ -114,8 +113,7 @@ fun ProductRow(product: Product) {
 }
 
 @Composable
-fun ColumnScope.AddressBox(addressState: String, onValueChange:(String)->Unit) {
-   // val textState = remember { mutableStateOf("") }
+fun ColumnScope.AddressBox(addressState: String, onValueChange: (String) -> Unit) {
     Card(
         elevation = 2.dp,
         modifier = Modifier
@@ -125,7 +123,7 @@ fun ColumnScope.AddressBox(addressState: String, onValueChange:(String)->Unit) {
         TextField(
             value = addressState,
             onValueChange = { onValueChange(it) },
-            label = { Text("Enter delivery address") }
+            label = { Text(stringResource(R.string.enter_delivery_address)) }
         )
     }
 
@@ -144,7 +142,7 @@ fun ColumnScope.BottomBar(totalPrice: Int, onClick: () -> Unit) {
     ) {
         Text(text = "Total Price: $$totalPrice", modifier = Modifier.testTag("testTagTotalPrice"))
         Button(onClick = { onClick() }) {
-            Text(text = "Place Order")
+            Text(text = stringResource(R.string.place_order))
         }
     }
 }

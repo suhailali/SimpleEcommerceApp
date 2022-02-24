@@ -22,15 +22,16 @@ const val SCREEN_ORDER_SUMMARY = "OrderSummary"
 const val SCREEN_ORDER_SUCCESS = "OrderSuccess"
 
 internal sealed class Screen(val route: String) {
-    object Home: Screen(ROUTE_HOME)
-    object Order: Screen(ROUTE_ORDER)
+    object Home : Screen(ROUTE_HOME)
+    object Order : Screen(ROUTE_ORDER)
 }
 
 @Composable
-fun AppNav(navController: NavHostController, mainViewModel: MainViewModel,
-           startDestination: String = Screen.Home.route
+fun AppNav(
+    navController: NavHostController, mainViewModel: MainViewModel,
+    startDestination: String = Screen.Home.route
 ) {
-    NavHost(navController = navController, startDestination = startDestination ) {
+    NavHost(navController = navController, startDestination = startDestination) {
         homeGraph(navController = navController, mainViewModel)
         orderGraph(navController = navController, mainViewModel)
     }
@@ -44,8 +45,10 @@ fun NavGraphBuilder.homeGraph(navController: NavHostController, mainViewModel: M
             }
             val parentViewModel = hiltViewModel<HomeViewModel>(parentEntry)
             parentViewModel.fetchData()
-            HomeScreen(viewModel = parentViewModel, mainViewModel = mainViewModel,
-                navController = navController)
+            HomeScreen(
+                viewModel = parentViewModel, mainViewModel = mainViewModel,
+                navController = navController
+            )
         }
     }
 }

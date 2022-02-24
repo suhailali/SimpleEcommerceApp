@@ -71,7 +71,7 @@ class QuantitySelectionTest {
 
     @Test
     fun checkPlusButtonNotIncrementsQuantityAboveMaxValue() {
-        (0..5).forEach { _->
+        (0..5).forEach { _ ->
             composeRule.onNodeWithTag("testTagPlusButton").performClick()
         }
         composeRule.onNodeWithTag("testTagQuantityText").assertTextEquals("4")
